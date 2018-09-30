@@ -1,0 +1,38 @@
+version: '3'
+
+volumes:
+  db:
+    driver: local
+  rabbitdata:
+    driver: local
+
+services:
+  site:
+    build:
+      context: .
+    volumes:
+      - ./:/var/www/html/wp-content/plugins/airbnb
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_PASSWORD: cabinscape
+      WORDPRESS_DEBUG: 1
+    ports:
+      - 8081:80
+  db:
+    image: mariadb
+    environment:
+     MYSQL_ROOT_PASSWORD: cabinscape
+    volumes:
+      - db:/var/lib/mysql/data
+
+  rabbit:
+    image: rabbitmq:3.6-management
+    ports:
+      - 15672:15672
+      - 5672:5672
+    volumes:
+      - rabbitdata:/var/lib/rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: "cabinscape"
+      RABBITMQ_DEFAULT_PASS: "cabinscape"
+      RABBITMQ_DEFAULT_VHOST: "/"

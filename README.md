@@ -1,3 +1,3 @@
 # AirBnB Calendar Sync WP Plugin
 
-This plugin publishes to a rabbit queue each time a booking is completed.
+Create a page with title airbnb.ics. This plugin then exposes an ics endpoint for consumption by airbnb's calendar.
